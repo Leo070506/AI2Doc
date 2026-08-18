@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     environment:
-      AI2DOC_PANDOC_PATH: /usr/local/bin/pandoc
+      AI2DOC_PANDOC_PATH: pandoc
       AI2DOC_STORAGE_ROOT: /tmp/ai2doc
       AI2DOC_TEMPLATES_ROOT: /app/templates
       AI2DOC_CORS_ORIGINS: http://localhost:8080
