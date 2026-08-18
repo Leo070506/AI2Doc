@@ -2,11 +2,13 @@
 
 > Turn AI conversations into beautiful professional documents.
 
+[![Latest Release](https://img.shields.io/github/v/release/Leo070506/AI2Doc?display_name=tag&sort=semver)](https://github.com/Leo070506/AI2Doc/releases/latest)
+
 AI2Doc 将 ChatGPT、DeepSeek、Claude、Gemini 等 AI 工具产生的 Markdown 回答，转换为结构清晰、样式统一、可以继续编辑的 Word 文档。
 
 它不是简单的 Markdown 转换器，而是一条专门面向 AI 内容的文档生成工作流：粘贴或上传、选择专业模板、生成 DOCX、安全下载。
 
-> **Current status:** Milestone 1.95 release gate passed. Web MVP、GitHub Actions、干净 Docker 冷启动、真实浏览器转换与 Word 视觉验收均已通过；`v0.1.0` 尚未发布。
+> **Latest Release:** [`v0.1.0`](https://github.com/Leo070506/AI2Doc/releases/tag/v0.1.0). Web MVP、GitHub Actions、干净 Docker 冷启动、真实浏览器转换与 Word 视觉验收均已通过。
 
 ## Demo
 
@@ -174,7 +176,7 @@ Bug reports, documentation fixes, tests, and focused improvements are welcome. R
 
 ## Releases
 
-首个公开版本正在准备中。版本变化见 [`CHANGELOG.md`](CHANGELOG.md)，`v0.1.0` 的待发布说明见 [`docs/releases/v0.1.0.md`](docs/releases/v0.1.0.md)。
+最新公开版本为 [`v0.1.0`](https://github.com/Leo070506/AI2Doc/releases/tag/v0.1.0)。版本变化见 [`CHANGELOG.md`](CHANGELOG.md)，完整发布说明见 [`docs/releases/v0.1.0.md`](docs/releases/v0.1.0.md)。
 
 ## License
 

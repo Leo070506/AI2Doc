@@ -45,7 +45,7 @@
 
 完成记录：仓库侧发布准备已完成，详见 [`docs/milestone-1.5-report.md`](docs/milestone-1.5-report.md)。GitHub Actions、正式仓库 URL 与 Docker 外部门禁已在后续里程碑完成。
 
-## Milestone 1.9 — v0.1.0 发布准备（进行中）
+## Milestone 1.9 — v0.1.0 发布准备（已完成）
 
 目标：不增加产品功能，完成首次公开版本的可复现发布门禁。
 
@@ -56,9 +56,9 @@
 - [x] 推送 `main` 并完成首次 GitHub Actions 托管运行
 - [x] 在干净 Docker 环境完成 Web → DOCX 真实闭环
 - [x] 填写最终仓库 URL与 GitHub CI 验证证据
-- [ ] 在全部发布门禁通过后发布 `v0.1.0`
+- [x] 在全部发布门禁通过后发布 `v0.1.0`
 
-完成记录：所有技术发布门禁均已通过，详见 [`docs/github-ci-validation.md`](docs/github-ci-validation.md) 与 [`docs/docker-release-validation.md`](docs/docker-release-validation.md)。按当前指令尚未发布 `v0.1.0`。
+完成记录：所有技术发布门禁均已通过，`v0.1.0` 已作为首个公开版本发布。详见 [`docs/github-ci-validation.md`](docs/github-ci-validation.md)、[`docs/docker-release-validation.md`](docs/docker-release-validation.md) 与 [`docs/release-validation.md`](docs/release-validation.md)。
 
 ## Phase 2 — 文档模板系统
 
