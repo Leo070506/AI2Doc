@@ -74,6 +74,8 @@ jobs:
             'test "$(id -u)" = "10001" && test "$(id -g)" = "10001" && test -w /tmp/ai2doc'
           docker compose exec --no-TTY backend pandoc --version \
             | head --lines=1 | tee validation-artifacts/pandoc-version.txt
+          docker compose exec --no-TTY frontend wget -q -T 2 -O /dev/null \
+            http://127.0.0.1:8080/
           curl --fail --show-error --silent http://localhost:8080/health/ready \
             | tee validation-artifacts/readiness.json
           curl --fail --show-error --silent http://localhost:8080/ \
@@ -115,6 +117,16 @@ jobs:
         run: |
           docker compose ps --all > validation-artifacts/compose-ps.txt 2>&1 || true
           docker compose logs --no-color > validation-artifacts/compose.log 2>&1 || true
+          backend_id=$(docker compose ps --quiet backend 2>/dev/null || true)
+          frontend_id=$(docker compose ps --quiet frontend 2>/dev/null || true)
+          if [ -n "$backend_id" ]; then
+            docker inspect --format '{{json .State.Health}}' "$backend_id" \
+              > validation-artifacts/backend-health.json 2>&1 || true
+          fi
+          if [ -n "$frontend_id" ]; then
+            docker inspect --format '{{json .State.Health}}' "$frontend_id" \
+              > validation-artifacts/frontend-health.json 2>&1 || true
+          fi
 
       - name: Upload validation artifact
         if: always()
