@@ -62,10 +62,10 @@ AI2Doc 将 ChatGPT、DeepSeek、Claude、Gemini 等 AI 工具产生的 Markdown 
 - Docker Engine or Docker Desktop
 - Docker Compose v2
 
-从 GitHub 仓库页面复制实际 Clone URL，并将 `<REPOSITORY_URL>` 替换为该地址：
+克隆仓库并启动：
 
 ```bash
-git clone <REPOSITORY_URL> AI2Doc
+git clone https://github.com/Leo070506/AI2Doc.git
 cd AI2Doc
 docker compose up --build
 ```

@@ -9,7 +9,7 @@ The local development path is verified end to end: frontend, backend readiness, 
 Two external release gates remain open:
 
 1. This machine has no Docker/Compose runtime, so images have not been built or cold-started.
-2. The repository has no Git remote, so workflow definitions have not yet executed on GitHub and the README still uses a generic `<REPOSITORY_URL>` placeholder.
+2. At Milestone 1.5 close, the repository had no Git remote, so workflow definitions had not yet executed on GitHub and the final Clone URL was still pending.
 
 AI2Doc is therefore a **release candidate**, not yet a verified `v0.1.0` release.
 
@@ -64,7 +64,7 @@ Completed assets:
 - public synthetic examples for formulas, reports and Chinese content
 - real Web, template selection and Word output screenshots under `docs/images/`
 
-The README clone command intentionally uses `<REPOSITORY_URL>` because no Git remote exists. It must be replaced with the actual repository URL before public release.
+At Milestone 1.5 close, the README Clone URL was intentionally pending because no Git remote existed. Milestone 1.9 replaces it with the confirmed repository URL before the first Push.
 
 ## 5. Validation results
 
@@ -104,7 +104,7 @@ It is not approved for direct unauthenticated public-internet exposure. Rate lim
 
 Do not add product features yet. Before tagging `v0.1.0`:
 
-1. Create or connect the GitHub repository and replace `<REPOSITORY_URL>` in the README.
+1. Create or connect the GitHub repository and confirm the README uses its actual Clone URL.
 2. Push the branch and require both GitHub Actions workflows to pass.
 3. Run the documented Docker cold-start test on a clean amd64 machine.
 4. Generate a DOCX through port 8080, verify Word output and confirm cleanup.

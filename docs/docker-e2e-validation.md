@@ -37,7 +37,7 @@ git clone
 在没有本项目镜像、容器和卷缓存的验证机上执行：
 
 ```bash
-git clone <REPOSITORY_URL> AI2Doc
+git clone https://github.com/Leo070506/AI2Doc.git
 cd AI2Doc
 docker compose version
 docker compose build --pull
