@@ -52,10 +52,11 @@
 - [x] Git 忽略规则、敏感信息、个人路径与发布资产审计
 - [x] `CHANGELOG.md` 与 `v0.1.0` Release 草稿
 - [x] GitHub Actions 和 Docker 端到端验收记录模板
-- [ ] 配置正式 GitHub Repository 与 `origin`
-- [ ] 推送 `main` 并完成首次 GitHub Actions 托管运行
+- [x] 配置正式 GitHub Repository 与 `origin`
+- [x] 推送 `main` 并完成首次 GitHub Actions 托管运行
 - [ ] 在干净 Docker 环境完成 Web → DOCX 真实闭环
-- [ ] 填写最终仓库 URL、验证证据并发布 `v0.1.0`
+- [x] 填写最终仓库 URL与 GitHub CI 验证证据
+- [ ] 在全部发布门禁通过后发布 `v0.1.0`
 
 完成记录将在所有外部门禁实际通过后补充；未执行的验证不得标记为成功。
 
