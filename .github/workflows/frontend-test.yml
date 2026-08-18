@@ -1,4 +1,5 @@
 name: Frontend Tests
+run-name: Frontend CI · ${{ github.event_name }} · ${{ github.ref_name }}
 
 on:
   push:

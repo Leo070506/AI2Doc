@@ -1,4 +1,5 @@
 name: Backend Tests
+run-name: Backend CI · ${{ github.event_name }} · ${{ github.ref_name }}
 
 on:
   push:
