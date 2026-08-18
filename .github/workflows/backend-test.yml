@@ -1,0 +1,63 @@
+name: Backend Tests
+
+on:
+  push:
+    paths:
+      - "backend/**"
+      - "templates/**"
+      - "examples/**"
+      - ".github/workflows/backend-test.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - "templates/**"
+      - "examples/**"
+      - ".github/workflows/backend-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+
+      - name: Install Pandoc 3.9.0.2
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl --fail --location --output pandoc.deb \
+            https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb
+          echo "ce4ac48f48aa7eadc1f5dbdf3449a1739f188ecb8c5421c5adc070fe7479e567  pandoc.deb" \
+            | sha256sum --check --strict
+          sudo dpkg --install pandoc.deb
+          pandoc --version | head --lines=1
+
+      - name: Install backend dependencies
+        run: python -m pip install --requirement backend/requirements-dev.txt
+
+      - name: Run backend test suite
+        working-directory: backend
+        run: python -m pytest

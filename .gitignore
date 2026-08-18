@@ -1,0 +1,43 @@
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# Backend
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Generated documents and temporary files
+backend/app/storage/temp/*
+!backend/app/storage/temp/.gitkeep
+*.docx
+!docs/tests/*.docx
+!templates/**/template.docx
+*.tmp
+
+# Local validation toolchain and visual-QA intermediates
+.tools/
+.qa/
+
+# Coverage and logs
+coverage/
+htmlcov/
+.coverage
+*.log

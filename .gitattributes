@@ -1,0 +1,11 @@
+* text=auto
+
+# Keep cross-platform build and automation files stable.
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+Dockerfile text eol=lf
+
+# Preserve generated and visual release assets byte-for-byte.
+*.docx binary
+*.png binary
