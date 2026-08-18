@@ -22,7 +22,8 @@ RUN python -m pip install --no-cache-dir --upgrade pip==26.2.1 \
 COPY backend/app ./app
 COPY templates /app/templates
 
-RUN useradd --create-home --uid 10001 ai2doc \
+RUN groupadd --gid 10001 ai2doc \
+    && useradd --create-home --uid 10001 --gid 10001 ai2doc \
     && mkdir --parents /tmp/ai2doc \
     && chown --recursive ai2doc:ai2doc /tmp/ai2doc
 

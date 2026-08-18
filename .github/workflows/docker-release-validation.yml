@@ -70,6 +70,8 @@ jobs:
           set -euo pipefail
           docker compose up --detach --wait
           docker compose ps | tee validation-artifacts/first-start.txt
+          docker compose exec --no-TTY backend sh -c \
+            'test "$(id -u)" = "10001" && test "$(id -g)" = "10001" && test -w /tmp/ai2doc'
           curl --fail --show-error --silent http://localhost:8080/health/ready \
             | tee validation-artifacts/readiness.json
           curl --fail --show-error --silent http://localhost:8080/ \

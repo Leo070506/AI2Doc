@@ -12,7 +12,7 @@ services:
       AI2DOC_TEMPLATES_ROOT: /app/templates
       AI2DOC_CORS_ORIGINS: http://localhost:8080
     tmpfs:
-      - /tmp/ai2doc:size=64m,mode=1770
+      - /tmp/ai2doc:size=64m,mode=0700,uid=10001,gid=10001
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/ready', timeout=2)"]
       interval: 10s
