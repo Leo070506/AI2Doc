@@ -28,7 +28,7 @@
 - [x] Docker Compose、前后端镜像和同源代理定义
 - [x] 后端自动化测试、前端类型检查与生产构建
 
-完成记录：API、真实 Pandoc 端到端转换及 Word 16.0 视觉验收均已通过。当前验证机未安装 Docker CLI，因此 Compose 只完成 YAML 静态校验，容器冷启动应在发布准备阶段继续验证。
+完成记录：API、真实 Pandoc 端到端转换及 Word 16.0 视觉验收均已通过；后续也已在干净 Ubuntu Runner 完成 Docker 冷启动验收。
 
 ## Milestone 1.5 — 开源发布准备（工程工作已完成）
 
@@ -43,7 +43,7 @@
 - [x] 核心上传、路径、命令和文件生命周期安全审计
 - [x] Milestone 1.5 发布报告
 
-完成记录：仓库侧发布准备已完成，详见 [`docs/milestone-1.5-report.md`](docs/milestone-1.5-report.md)。`v0.1.0` 仍需外部完成 Docker 冷启动、GitHub Actions 首次运行和真实仓库 URL 替换。
+完成记录：仓库侧发布准备已完成，详见 [`docs/milestone-1.5-report.md`](docs/milestone-1.5-report.md)。GitHub Actions、正式仓库 URL 与 Docker 外部门禁已在后续里程碑完成。
 
 ## Milestone 1.9 — v0.1.0 发布准备（进行中）
 
@@ -54,11 +54,11 @@
 - [x] GitHub Actions 和 Docker 端到端验收记录模板
 - [x] 配置正式 GitHub Repository 与 `origin`
 - [x] 推送 `main` 并完成首次 GitHub Actions 托管运行
-- [ ] 在干净 Docker 环境完成 Web → DOCX 真实闭环
+- [x] 在干净 Docker 环境完成 Web → DOCX 真实闭环
 - [x] 填写最终仓库 URL与 GitHub CI 验证证据
 - [ ] 在全部发布门禁通过后发布 `v0.1.0`
 
-完成记录将在所有外部门禁实际通过后补充；未执行的验证不得标记为成功。
+完成记录：所有技术发布门禁均已通过，详见 [`docs/github-ci-validation.md`](docs/github-ci-validation.md) 与 [`docs/docker-release-validation.md`](docs/docker-release-validation.md)。按当前指令尚未发布 `v0.1.0`。
 
 ## Phase 2 — 文档模板系统
 

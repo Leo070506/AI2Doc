@@ -27,6 +27,5 @@ AI2Doc 的重要变更记录在此文件中。版本格式遵循 [Semantic Versi
 
 ### Known limitations
 
-- 首次 GitHub Actions 运行和干净 Docker 环境冷启动仍是发布 `v0.1.0` 前的外部质量门禁。
 - Docker 后端镜像当前固定为 `linux/amd64`。
 - MVP 不包含登录、限流、数据库、云存储、AI API 或多进程任务状态共享。

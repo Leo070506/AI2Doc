@@ -6,7 +6,7 @@ AI2Doc 将 ChatGPT、DeepSeek、Claude、Gemini 等 AI 工具产生的 Markdown 
 
 它不是简单的 Markdown 转换器，而是一条专门面向 AI 内容的文档生成工作流：粘贴或上传、选择专业模板、生成 DOCX、安全下载。
 
-> **Current status:** Milestone 1.9 release preparation. Web MVP、真实 Pandoc 转换、本地浏览器闭环和首次 GitHub Actions 已通过；`v0.1.0` 仍需干净 Docker 环境冷启动。
+> **Current status:** Milestone 1.95 release gate passed. Web MVP、GitHub Actions、干净 Docker 冷启动、真实浏览器转换与 Word 视觉验收均已通过；`v0.1.0` 尚未发布。
 
 ## Demo
 
@@ -78,7 +78,7 @@ docker compose up --build
 docker compose down
 ```
 
-> 当前验证机没有 Docker CLI；真实容器闭环仍是发布门禁。环境记录见 [`docs/docker-validation.md`](docs/docker-validation.md)，完整冷启动验收表见 [`docs/docker-e2e-validation.md`](docs/docker-e2e-validation.md)。
+> 干净 Ubuntu Runner 的真实构建、浏览器转换、Word 验收与重启门禁已经通过，详见 [`docs/docker-release-validation.md`](docs/docker-release-validation.md)。
 
 ## Local development
 
