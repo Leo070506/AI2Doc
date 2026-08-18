@@ -2,7 +2,7 @@
 
 AI2Doc 的重要变更记录在此文件中。版本格式遵循 [Semantic Versioning](https://semver.org/)，内容结构参考 [Keep a Changelog](https://keepachangelog.com/)。
 
-## 0.1.0 - Unreleased
+## 0.1.0 - 2026-08-18
 
 ### Added
 
