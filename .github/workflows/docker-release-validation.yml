@@ -1,0 +1,126 @@
+name: Docker Release Validation
+run-name: Docker release gate · ${{ github.event_name }} · ${{ github.ref_name }}
+
+on:
+  push:
+    paths:
+      - ".github/scripts/docker_release_e2e.py"
+      - ".github/workflows/docker-release-validation.yml"
+      - "backend/**"
+      - "frontend/**"
+      - "templates/**"
+      - "examples/docker-release-example.md"
+      - "docker-compose.yml"
+  pull_request:
+    paths:
+      - ".github/scripts/docker_release_e2e.py"
+      - ".github/workflows/docker-release-validation.yml"
+      - "backend/**"
+      - "frontend/**"
+      - "templates/**"
+      - "examples/docker-release-example.md"
+      - "docker-compose.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docker-release-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker-e2e:
+    name: Clean Compose build and E2E
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Record clean-runner environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p validation-artifacts
+          {
+            echo "commit=${GITHUB_SHA}"
+            uname -a
+            cat /etc/os-release
+            docker --version
+            docker compose version
+            google-chrome --version
+          } | tee validation-artifacts/environment.txt
+          docker compose config > validation-artifacts/compose-config.yml
+
+      - name: Build frontend and backend images
+        shell: bash
+        run: |
+          set -euo pipefail
+          started_at=$(date +%s)
+          docker compose build --pull 2>&1 | tee validation-artifacts/build.log
+          finished_at=$(date +%s)
+          echo "build_seconds=$((finished_at - started_at))" | tee validation-artifacts/build-time.txt
+          docker compose images | tee validation-artifacts/images.txt
+
+      - name: Start the complete stack
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker compose up --detach --wait
+          docker compose ps | tee validation-artifacts/first-start.txt
+          curl --fail --show-error --silent http://localhost:8080/health/ready \
+            | tee validation-artifacts/readiness.json
+          curl --fail --show-error --silent http://localhost:8080/ \
+            > validation-artifacts/frontend.html
+          grep --fixed-strings "AI2Doc" validation-artifacts/frontend.html
+          google-chrome --headless=new --no-sandbox --disable-gpu \
+            --virtual-time-budget=3000 --dump-dom http://localhost:8080/ \
+            > validation-artifacts/browser-first-start.html
+          grep --fixed-strings "Generate DOCX" \
+            validation-artifacts/browser-first-start.html
+
+      - name: Convert and inspect a real academic DOCX
+        env:
+          AI2DOC_E2E_BASE_URL: http://localhost:8080
+          AI2DOC_E2E_INPUT: examples/docker-release-example.md
+          AI2DOC_E2E_ARTIFACT_DIR: validation-artifacts
+        run: python .github/scripts/docker_release_e2e.py
+
+      - name: Stop and restart the stack
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker compose down
+          docker compose up --detach --wait
+          docker compose ps | tee validation-artifacts/restart.txt
+          curl --fail --show-error --silent http://localhost:8080/health/ready \
+            | tee validation-artifacts/restart-readiness.json
+          curl --fail --show-error --silent http://localhost:8080/ \
+            > validation-artifacts/restart-frontend.html
+          google-chrome --headless=new --no-sandbox --disable-gpu \
+            --virtual-time-budget=3000 --dump-dom http://localhost:8080/ \
+            > validation-artifacts/browser-restart.html
+          grep --fixed-strings "Generate DOCX" \
+            validation-artifacts/browser-restart.html
+
+      - name: Collect runtime evidence
+        if: always()
+        shell: bash
+        run: |
+          docker compose ps --all > validation-artifacts/compose-ps.txt 2>&1 || true
+          docker compose logs --no-color > validation-artifacts/compose.log 2>&1 || true
+
+      - name: Upload validation artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-release-validation-${{ github.sha }}
+          path: validation-artifacts/
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Clean up containers and volumes
+        if: always()
+        run: docker compose down --volumes --remove-orphans
