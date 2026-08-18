@@ -38,7 +38,7 @@ docker compose ps
 
 使用 [`../examples/docker-release-example.md`](../examples/docker-release-example.md) 和 Academic 模板完成真实转换。自动化门禁必须检查：
 
-- 页面和 readiness 返回 HTTP 200，且 Headless Chrome 渲染后的 DOM 包含 Generate DOCX
+- 页面和 readiness 返回 HTTP 200，且 Headless Chrome 真实完成粘贴、Academic 选择、Generate DOCX 和下载链接展示
 - 转换与 DOCX 下载成功
 - 第二次下载返回 404
 - DOCX ZIP/OOXML 结构完整

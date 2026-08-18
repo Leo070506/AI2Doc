@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - ".github/scripts/docker_release_e2e.py"
+      - ".github/scripts/browser_release_e2e.mjs"
       - ".github/workflows/docker-release-validation.yml"
       - "backend/**"
       - "frontend/**"
@@ -14,6 +15,7 @@ on:
   pull_request:
     paths:
       - ".github/scripts/docker_release_e2e.py"
+      - ".github/scripts/browser_release_e2e.mjs"
       - ".github/workflows/docker-release-validation.yml"
       - "backend/**"
       - "frontend/**"
@@ -38,6 +40,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
+
+      - name: Set up Node.js for browser validation
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
 
       - name: Record clean-runner environment
         shell: bash
@@ -86,6 +93,34 @@ jobs:
             > validation-artifacts/browser-first-start.html
           grep --fixed-strings "Generate DOCX" \
             validation-artifacts/browser-first-start.html
+
+      - name: Drive the real browser conversion flow
+        shell: bash
+        env:
+          AI2DOC_E2E_BASE_URL: http://localhost:8080
+          AI2DOC_E2E_INPUT: examples/docker-release-example.md
+          AI2DOC_E2E_ARTIFACT_DIR: validation-artifacts
+          CHROME_DEBUG_URL: http://127.0.0.1:9222
+        run: |
+          set -euo pipefail
+          google-chrome --headless=new --no-sandbox --disable-gpu \
+            --disable-dev-shm-usage --remote-allow-origins='*' \
+            --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 \
+            --user-data-dir=/tmp/ai2doc-chrome about:blank \
+            > validation-artifacts/chrome.log 2>&1 &
+          chrome_pid=$!
+          trap 'kill "$chrome_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:9222/json/version > /dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo "Chrome DevTools endpoint did not start" >&2
+              exit 1
+            fi
+            sleep 1
+          done
+          node .github/scripts/browser_release_e2e.mjs
 
       - name: Convert and inspect a real academic DOCX
         env:
